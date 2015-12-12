@@ -20,7 +20,7 @@ namespace makeErrorCause {
     }
 
     toString () {
-      return super.toString() + (this.cause ? `\nCaused by: ${this.cause.message}` : '')
+      return super.toString() + (this.cause ? `\nCaused by: ${this.cause.toString()}` : '')
     }
 
   }
