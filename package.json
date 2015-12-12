@@ -14,7 +14,7 @@
     "test-spec": "ts-node node_modules/blue-tape/bin/blue-tape.js \"src/**/*.spec.ts\" | tap-spec",
     "test-cov": "ts-node node_modules/istanbul/lib/cli.js cover -e .ts --print none -x \"*.d.ts\" -x \"*.spec.ts\" blue-tape -- \"src/**/*.spec.ts\" | tap-spec",
     "test": "npm run lint && npm run test-cov",
-    "prepublish": "npm run build"
+    "prepublish": "typings install && npm run build"
   },
   "repository": {
     "type": "git",
