@@ -12,11 +12,8 @@ namespace makeErrorCause {
 
   export class BaseError extends makeError.BaseError {
 
-    cause: Error
-
-    constructor (message: string, cause: Error) {
+    constructor (message: string, public cause?: Error) {
       super(message)
-      this.cause = cause
     }
 
     toString () {
