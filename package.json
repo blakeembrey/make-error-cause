@@ -1,6 +1,6 @@
 {
   "name": "make-error-cause",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Make your own error types, with a cause!",
   "main": "dist/index.js",
   "files": [
