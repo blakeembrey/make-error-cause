@@ -1,7 +1,7 @@
 {
   "name": "make-error-cause",
   "version": "1.0.2",
-  "description": "Make your own error types, with a cause!",
+  "description": "Make your own nested error types!",
   "main": "dist/index.js",
   "files": [
     "dist/",
@@ -21,11 +21,12 @@
     "url": "git://github.com/blakeembrey/make-error-cause.git"
   },
   "keywords": [
-    "custom",
+    "nested",
     "error",
+    "cause",
     "extend",
     "inherit",
-    "cause"
+    "custom"
   ],
   "author": {
     "name": "Blake Embrey",

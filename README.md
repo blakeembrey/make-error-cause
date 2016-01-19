@@ -5,14 +5,14 @@
 [![Build status][travis-image]][travis-url]
 [![Test coverage][coveralls-image]][coveralls-url]
 
-> Make your own error types, with a cause!
+> Make your own nested error types!
 
 ## Features
 
 * Compatible with Node and browsers
 * Works with `instanceof`
 * Use `error.stack` and `error.name`
-* Appended cause with `toString`
+* Output full cause with `toString`
 * Extends [make-error](https://github.com/julien-f/js-make-error)
 
 ## Installation
@@ -23,7 +23,7 @@ npm install make-error-cause --save
 
 ## Usage
 
-See the usages from [`make-error`](https://github.com/julien-f/js-make-error#usage). Things work the same here, except the base function has a second argument for the "cause". The cause will be printed when using `toString`, but can also be accessed manually.
+Usages from [`make-error`](https://github.com/julien-f/js-make-error#usage). The only difference is that errors accept a second argument known as the error "cause". The cause is used to wrap original errors with more intuitive feedback - for instance, wrapping a raw database error in a HTTP error.
 
 ```js
 const CustomError = makeErrorCause('CustomError')
@@ -38,7 +38,7 @@ error.cause.stack // Handy!
 
 ## Attribution
 
-Inspired by [`verror`](https://www.npmjs.com/package/verror), and others, but made much lighter for browser bundling in tight places.
+Inspired by [`verror`](https://www.npmjs.com/package/verror), and others, but created lighter and without core dependencies for browser usage.
 
 ## License
 
