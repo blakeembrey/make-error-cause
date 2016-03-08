@@ -39,14 +39,14 @@
   },
   "homepage": "https://github.com/blakeembrey/make-error-cause",
   "devDependencies": {
-    "blue-tape": "^0.1.10",
+    "blue-tape": "^0.2.0",
     "istanbul": "1.0.0-alpha.2",
     "pre-commit": "^1.0.6",
     "tap-spec": "^4.1.1",
     "ts-node": "^0.5.0",
     "tslint": "^3.1.1",
     "typescript": "^1.7.3",
-    "typings": "^0.3.1"
+    "typings": "^0.7.2"
   },
   "dependencies": {
     "make-error": "^1.1.1"
