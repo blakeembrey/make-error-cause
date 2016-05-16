@@ -3,9 +3,9 @@ import makeError = require('make-error')
 function makeErrorCause (value: string | Function): makeErrorCause.Constructor<makeErrorCause.BaseError>
 function makeErrorCause <T extends Error> (
   value: string | Function,
-  super_: { new (...args: any[]): T } = makeErrorCause.BaseError as any
+  _super: { new (...args: any[]): T } = makeErrorCause.BaseError as any
 ): makeErrorCause.Constructor<T> {
-  return makeError(value, super_)
+  return makeError(value, _super)
 }
 
 namespace makeErrorCause {
