@@ -1,7 +1,4 @@
 {
-  "dependencies": {
-    "make-error": "github:typings/typed-make-error#310953e35a2c6927b5743dc2d2215384d056fa7a"
-  },
   "devDependencies": {
     "blue-tape": "github:typings/typed-blue-tape#a4e41a85d6f760e7c60088127968eae7d3a556fa"
   },
