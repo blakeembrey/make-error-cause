@@ -4,9 +4,7 @@
   "description": "Make your own nested error types!",
   "main": "dist/index.js",
   "files": [
-    "dist/",
-    "typings.json",
-    "LICENSE"
+    "dist/"
   ],
   "scripts": {
     "lint": "tslint \"src/**/*.ts\"",
@@ -46,9 +44,9 @@
     "tslint": "^3.10.2",
     "tslint-config-standard": "^1.0.0",
     "typescript": "^1.7.3",
-    "typings": "^1.0.2"
+    "typings": "^1.3.1"
   },
   "dependencies": {
-    "make-error": "^1.1.1"
+    "make-error": "^1.2.0"
   }
 }
