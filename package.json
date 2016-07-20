@@ -4,9 +4,7 @@
   "description": "Make your own nested error types!",
   "main": "dist/index.js",
   "files": [
-    "dist/",
-    "typings.json",
-    "LICENSE"
+    "dist/"
   ],
   "scripts": {
     "lint": "tslint \"src/**/*.ts\"",
