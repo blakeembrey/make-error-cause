@@ -38,7 +38,7 @@
   },
   "homepage": "https://github.com/blakeembrey/make-error-cause",
   "devDependencies": {
-    "blue-tape": "^0.2.0",
+    "blue-tape": "^1.0.0",
     "istanbul": "1.0.0-alpha.2",
     "tap-spec": "^4.1.1",
     "ts-node": "^1.1.0",
