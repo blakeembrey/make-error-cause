@@ -3,6 +3,10 @@ import makeError = require('make-error')
 function makeErrorCause (value: string | Function): makeErrorCause.Constructor<makeErrorCause.BaseError>
 function makeErrorCause <T extends Error> (
   value: string | Function,
+  _super: { new (...args: any[]): T }
+): makeErrorCause.Constructor<T>
+function makeErrorCause <T extends Error> (
+  value: string | Function,
   _super: { new (...args: any[]): T } = makeErrorCause.BaseError as any
 ): makeErrorCause.Constructor<T> {
   return makeError(value, _super)
