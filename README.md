@@ -7,6 +7,27 @@
 
 > Make your own nested error types!
 
+## 2.0 upgrade note
+
+`make-error-cause@2.0` is converted to es2016 module.
+This means the way to reference `make-error-cause` has slightly changed:
+
+```ts
+// In 1.x
+import makeErrorCause = require('make-error-cause');
+
+// In 2.0
+import makeErrorCause from 'make-error-cause';
+
+// if using `require()` syntax
+import makeErrorCauseModule = require('make-error-cause');
+const makeErrorCause = makeErrorCause.default;
+
+// For CommonJS JavaScript
+const makeErrorCauseModule = require('make-error-cause');
+const makeErrorCause = makeErrorCause.default;
+```
+
 ## Features
 
 * Compatible with Node and browsers
