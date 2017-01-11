@@ -26,6 +26,8 @@ npm install make-error-cause --save
 Usages from [`make-error`](https://github.com/julien-f/js-make-error#usage). The only difference is that errors accept a second argument known as the error "cause". The cause is used to wrap original errors with more intuitive feedback - for instance, wrapping a raw database error in a HTTP error.
 
 ```js
+const makeErrorCause = require('make-error-cause')
+
 const CustomError = makeErrorCause('CustomError')
 
 const cause = new Error('boom!')
@@ -34,6 +36,17 @@ const error = new CustomError('something bad', cause)
 error.toString() //=> "CustomError: something bad\nCaused by: boom!"
 error.stack // Works!
 error.cause.stack // Handy!
+```
+
+For `ES2015` or TypeScript:
+
+```ts
+import { BaseError } from 'make-error-cause'
+
+class CustomError extends BaseError {
+}
+
+// ...the rest same as above.
 ```
 
 ## Attribution
