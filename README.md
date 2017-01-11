@@ -38,15 +38,14 @@ error.stack // Works!
 error.cause.stack // Handy!
 ```
 
-For `ES2015` or TypeScript:
+Using ES2015 and TypeScript:
 
 ```ts
 import { BaseError } from 'make-error-cause'
 
-class CustomError extends BaseError {
-}
+class CustomError extends BaseError {}
 
-// ...the rest same as above.
+// As above...
 ```
 
 ## Attribution
