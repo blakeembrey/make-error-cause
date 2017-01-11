@@ -9,7 +9,7 @@
 
 ## 2.0 upgrade note
 
-`make-error-cause@2.0` is converted to es2016 module.
+`make-error-cause@2.0` is converted to es2015 module.
 This means the way to reference `make-error-cause` has slightly changed:
 
 ```ts
