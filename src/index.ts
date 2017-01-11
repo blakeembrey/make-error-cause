@@ -1,37 +1,31 @@
 import makeError = require('make-error')
 
-function makeErrorCause (value: string | Function): makeErrorCause.Constructor<makeErrorCause.BaseError>
-function makeErrorCause <T extends Error> (
+export default function makeErrorCause (value: string | Function): Constructor<BaseError>
+export default function makeErrorCause <T extends Error> (
   value: string | Function,
   _super: { new (...args: any[]): T }
-): makeErrorCause.Constructor<T>
-function makeErrorCause <T extends Error> (
+): Constructor<T>
+export default function makeErrorCause <T extends Error> (
   value: string | Function,
-  _super: { new (...args: any[]): T } = makeErrorCause.BaseError as any
-): makeErrorCause.Constructor<T> {
+  _super: { new (...args: any[]): T } = BaseError as any
+): Constructor<T> {
   return makeError(value, _super)
 }
 
-namespace makeErrorCause {
+export class BaseError extends makeError.BaseError {
 
-  export class BaseError extends makeError.BaseError {
-
-    constructor (message: string, public cause?: Error) {
-      super(message)
-    }
-
-    toString () {
-      return super.toString() + (this.cause ? `\nCaused by: ${this.cause.toString()}` : '')
-    }
-
+  constructor (message: string, public cause?: Error) {
+    super(message)
   }
 
-  export interface Constructor <T> {
-    new (message: string, cause?: Error): T
-    super_: any
-    prototype: T
+  toString () {
+    return super.toString() + (this.cause ? `\nCaused by: ${this.cause.toString()}` : '')
   }
 
 }
 
-export = makeErrorCause
+export interface Constructor <T> {
+  new (message: string, cause?: Error): T
+  super_: any
+  prototype: T
+}
