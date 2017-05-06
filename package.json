@@ -8,7 +8,7 @@
     "dist/"
   ],
   "scripts": {
-    "lint": "tslint \"src/**/*.ts\"",
+    "lint": "tslint \"src/**/*.ts\" --project tsconfig.json --type-check",
     "build": "rm -rf dist/ && tsc",
     "test-spec": "ts-node node_modules/blue-tape/bin/blue-tape.js \"src/**/*.spec.ts\" | tap-spec",
     "test-cov": "ts-node node_modules/istanbul/lib/cli.js cover -e .ts --print none -x \"*.d.ts\" -x \"*.spec.ts\" blue-tape -- \"src/**/*.spec.ts\" | tap-spec",
@@ -48,6 +48,6 @@
     "typings": "^2.1.1"
   },
   "dependencies": {
-    "make-error": "^1.2.0"
+    "make-error": "^1.2.3"
   }
 }
