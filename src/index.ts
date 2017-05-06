@@ -27,9 +27,9 @@ namespace makeErrorCause {
   }
 
   export interface Constructor <T> {
-    new (message: string, cause?: Error): T
     super_: any
     prototype: T
+    new (message: string, cause?: Error): T
   }
 
 }
