@@ -41,7 +41,7 @@
     "blue-tape": "^1.0.0",
     "istanbul": "1.0.0-alpha.2",
     "tap-spec": "^4.1.1",
-    "ts-node": "^3.0.4",
+    "ts-node": "^4.0.0",
     "tslint": "^5.2.0",
     "tslint-config-standard": "^6.0.0",
     "typescript": "^2.0.3",
