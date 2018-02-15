@@ -7,7 +7,7 @@ function makeErrorCause <T extends Error> (
 ): makeErrorCause.Constructor<T>
 function makeErrorCause <T extends Error> (
   value: string | Function,
-  _super: { new (...args: any[]): T } = makeErrorCause.BaseError as any
+  _super: { new (message: string, ...args: any[]): T } = makeErrorCause.BaseError as any
 ): makeErrorCause.Constructor<T> {
   return makeError(value, _super)
 }
