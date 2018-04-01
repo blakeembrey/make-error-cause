@@ -7,7 +7,7 @@ export class BaseError extends makeError.BaseError {
   }
 
   get fullStack () {
-    let err: Error = this.cause
+    let err: Error | undefined = this.cause
     let fullStack = this.stack
 
     while (err) {
