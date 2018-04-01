@@ -6,6 +6,10 @@ export class BaseError extends makeError.BaseError {
     super(message)
   }
 
+  inspect () {
+    return fullStack(this)
+  }
+
 }
 
 export function fullStack (error: Error | BaseError) {

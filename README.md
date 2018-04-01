@@ -12,6 +12,7 @@
 * Compatible with node.js and browsers
 * Works with `instanceof`
 * Output full stack trace with `fullStack(err)`
+* Automatic full stack traces with node.js (via [`inspect()`](https://nodejs.org/api/util.html#util_util_inspect_object_options))
 * Extends [`make-error`](https://github.com/JsCommunity/make-error)
 
 ## Installation
@@ -36,6 +37,8 @@ const customError = new CustomError('Another boom!', error)
 
 console.log(fullStack(error)) // Works with any error.
 console.log(fullStack(customError)) // Extended stack trace contains error causes.
+
+console.log(customError instanceof Error) //=> true
 ```
 
 ## Attribution
