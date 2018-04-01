@@ -13,7 +13,7 @@
     "test-spec": "ts-node --type-check node_modules/blue-tape/bin/blue-tape.js \"src/**/*.spec.ts\" | tap-spec",
     "test-cov": "ts-node node_modules/istanbul/lib/cli.js cover -e .ts --print none -x \"*.d.ts\" -x \"*.spec.ts\" blue-tape -- \"src/**/*.spec.ts\" | tap-spec",
     "test": "npm run lint && npm run test-cov",
-    "prepublish": "typings install && npm run build"
+    "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -38,14 +38,15 @@
   },
   "homepage": "https://github.com/blakeembrey/make-error-cause",
   "devDependencies": {
+    "@types/blue-tape": "^0.1.31",
+    "@types/node": "^9.6.1",
     "blue-tape": "^1.0.0",
     "istanbul": "1.0.0-alpha.2",
     "tap-spec": "^4.1.1",
     "ts-node": "^5.0.1",
     "tslint": "^5.9.1",
     "tslint-config-standard": "^7.0.0",
-    "typescript": "^2.7.2",
-    "typings": "^2.1.1"
+    "typescript": "^2.7.2"
   },
   "dependencies": {
     "make-error": "^1.3.4"
