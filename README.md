@@ -1,58 +1,45 @@
 # Make Error Cause
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/blakeembrey/make-error-cause.svg)](https://greenkeeper.io/)
-
 [![NPM version][npm-image]][npm-url]
 [![NPM downloads][downloads-image]][downloads-url]
 [![Build status][travis-image]][travis-url]
 [![Test coverage][coveralls-image]][coveralls-url]
 
-> Make your own nested error types!
+> Make your own nested errors.
 
 ## Features
 
-* Compatible with Node and browsers
+* Compatible with node.js and browsers
 * Works with `instanceof`
-* Use `error.stack` and `error.name`
-* Output full cause with `toString`
-* Extends [make-error](https://github.com/julien-f/js-make-error)
+* Output full cause with `err.fullStack`
+* Extends [`make-error`](https://github.com/JsCommunity/make-error)
 
 ## Installation
 
-```sh
+```
 npm install make-error-cause --save
 ```
 
 ## Usage
 
-Usages from [`make-error`](https://github.com/julien-f/js-make-error#usage). The only difference is that errors accept a second argument known as the error "cause". The cause is used to wrap original errors with more intuitive feedback - for instance, wrapping a raw database error in a HTTP error.
-
 ```js
-const makeErrorCause = require('make-error-cause')
-
-const CustomError = makeErrorCause('CustomError')
-
-const cause = new Error('boom!')
-const error = new CustomError('something bad', cause)
-
-error.toString() //=> "CustomError: something bad\nCaused by: boom!"
-error.stack // Works!
-error.cause.stack // Handy!
-```
-
-Using ES2015 and TypeScript:
-
-```ts
 import { BaseError } from 'make-error-cause'
 
-class CustomError extends BaseError {}
-
-// As above...
+class CustomError extends BaseError {
+  constructor (message, cause) {
+    super(message, cause)
+  }
+}
 ```
 
 ## Attribution
 
 Inspired by [`verror`](https://www.npmjs.com/package/verror), and others, but created lighter and without core dependencies for browser usage.
+
+Other references:
+
+* [Java](https://docs.oracle.com/javase/7/docs/api/java/lang/Exception.html)
+* [Python](https://www.python.org/dev/peps/pep-3134/)
 
 ## License
 

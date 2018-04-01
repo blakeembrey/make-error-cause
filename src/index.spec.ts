@@ -1,27 +1,29 @@
 import test = require('blue-tape')
-import makeErrorCause = require('./index')
+import { BaseError } from './index'
+
+const SEP_TEXT = '\n\nDuring the above error, another error occurred:\n\n'
 
 test('make error cause', t => {
-  const TestError = makeErrorCause('TestError')
-  const SubTestError = makeErrorCause('SubTestError', TestError)
+  class TestError extends BaseError {}
+  class SubTestError extends TestError {}
 
   t.test('render the cause', t => {
     const cause = new Error('boom!')
-    const error = new TestError('something bad', cause)
-    const again = new SubTestError('more bad', error)
+    const testError = new TestError('something bad', cause)
+    const subTestError = new SubTestError('more bad', testError)
 
-    t.equal(error.cause, cause)
-    t.equal(error.toString(), 'TestError: something bad\nCaused by: Error: boom!')
-    t.ok(error instanceof Error)
-    t.ok(error instanceof makeErrorCause.BaseError)
-    t.ok(error instanceof TestError)
+    t.equal(testError.cause, cause)
+    t.equal(testError.fullStack, `${cause.stack}${SEP_TEXT}${testError.stack}`)
+    t.ok(testError instanceof Error)
+    t.ok(testError instanceof BaseError)
+    t.ok(testError instanceof TestError)
 
-    t.equal(again.cause, error)
-    t.equal(again.toString(), 'SubTestError: more bad\nCaused by: TestError: something bad\nCaused by: Error: boom!')
-    t.ok(again instanceof Error)
-    t.ok(again instanceof makeErrorCause.BaseError)
-    t.ok(again instanceof TestError)
-    t.ok(again instanceof SubTestError)
+    t.equal(subTestError.cause, testError)
+    t.equal(subTestError.fullStack, `${cause.stack}${SEP_TEXT}${testError.stack}${SEP_TEXT}${subTestError.stack}`)
+    t.ok(subTestError instanceof Error)
+    t.ok(subTestError instanceof BaseError)
+    t.ok(subTestError instanceof TestError)
+    t.ok(subTestError instanceof SubTestError)
 
     t.end()
   })

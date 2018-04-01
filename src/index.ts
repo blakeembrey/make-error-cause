@@ -1,37 +1,21 @@
-import makeError = require('make-error')
+import * as makeError from 'make-error'
 
-function makeErrorCause (value: string | Function): makeErrorCause.Constructor<makeErrorCause.BaseError>
-function makeErrorCause <T extends Error> (
-  value: string | Function,
-  _super: { new (...args: any[]): T }
-): makeErrorCause.Constructor<T>
-function makeErrorCause <T extends Error> (
-  value: string | Function,
-  _super: { new (message: string, ...args: any[]): T } = makeErrorCause.BaseError as any
-): makeErrorCause.Constructor<T> {
-  return makeError(value, _super)
-}
+export class BaseError extends makeError.BaseError {
 
-namespace makeErrorCause {
-
-  export class BaseError extends makeError.BaseError {
-
-    constructor (message: string, public cause?: Error) {
-      super(message)
-    }
-
-    toString () {
-      return super.toString() + (this.cause ? `\nCaused by: ${this.cause.toString()}` : '')
-    }
-
+  constructor (message: string, public cause?: Error) {
+    super(message)
   }
 
-  export interface Constructor <T> {
-    super_: any
-    prototype: T
-    new (message: string, cause?: Error): T
+  get fullStack () {
+    let err: Error = this.cause
+    let fullStack = this.stack
+
+    while (err) {
+      fullStack = `${err.stack}\n\nDuring the above error, another error occurred:\n\n${fullStack}`
+      err = (err as BaseError).cause
+    }
+
+    return fullStack
   }
 
 }
-
-export = makeErrorCause
