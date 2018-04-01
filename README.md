@@ -11,7 +11,7 @@
 
 * Compatible with node.js and browsers
 * Works with `instanceof`
-* Output full cause with `err.fullStack`
+* Output full stack trace with `fullStack(err)`
 * Extends [`make-error`](https://github.com/JsCommunity/make-error)
 
 ## Installation
@@ -23,13 +23,19 @@ npm install make-error-cause --save
 ## Usage
 
 ```js
-import { BaseError } from 'make-error-cause'
+import { BaseError, fullStack } from 'make-error-cause'
 
 class CustomError extends BaseError {
   constructor (message, cause) {
     super(message, cause)
   }
 }
+
+const error = new Error('Boom!')
+const customError = new CustomError('Another boom!', error)
+
+console.log(fullStack(error)) // Works with any error.
+console.log(fullStack(customError)) // Extended stack trace contains error causes.
 ```
 
 ## Attribution

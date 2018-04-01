@@ -6,16 +6,16 @@ export class BaseError extends makeError.BaseError {
     super(message)
   }
 
-  get fullStack () {
-    let err: Error | undefined = this.cause
-    let fullStack = this.stack
+}
 
-    while (err) {
-      fullStack = `${err.stack}\n\nDuring the above error, another error occurred:\n\n${fullStack}`
-      err = (err as BaseError).cause
-    }
+export function fullStack (error: Error | BaseError) {
+  let err: Error | undefined = (error as BaseError).cause
+  let fullStack = error.stack
 
-    return fullStack
+  while (err) {
+    fullStack = `${err.stack}\n\nDuring the above error, another error occurred:\n\n${fullStack}`
+    err = (err as BaseError).cause
   }
 
+  return fullStack
 }
