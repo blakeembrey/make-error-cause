@@ -2,7 +2,7 @@ import test = require('blue-tape')
 import { inspect } from 'util'
 import { BaseError, fullStack } from './index'
 
-const SEP_TEXT = '\n\nDuring the above error, another error occurred:\n\n'
+const SEP_TEXT = '\n\nThe above exception was the direct cause of the following exception:\n\n'
 
 test('make error cause', t => {
   class TestError extends BaseError {}

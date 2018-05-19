@@ -17,7 +17,7 @@ export function fullStack (error: Error | BaseError) {
   let fullStack = error.stack
 
   while (err) {
-    fullStack = `${err.stack}\n\nDuring the above error, another error occurred:\n\n${fullStack}`
+    fullStack = `${err.stack}\n\nThe above exception was the direct cause of the following exception:\n\n${fullStack}`
     err = (err as BaseError).cause
   }
 
