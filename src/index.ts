@@ -1,5 +1,10 @@
 import * as makeError from 'make-error'
 
+/**
+ * @internal
+ */
+export const SEPARATOR_TEXT = `\n\nThe following exception was the direct cause of the above exception:\n\n`
+
 export class BaseError extends makeError.BaseError {
 
   constructor (message: string, public cause?: Error) {
@@ -17,7 +22,9 @@ export function fullStack (error: Error | BaseError) {
   let fullStack = error.stack
 
   while (err) {
-    fullStack = `${err.stack}\n\nThe above exception was the direct cause of the following exception:\n\n${fullStack}`
+    fullStack += SEPARATOR_TEXT
+    fullStack += err.stack || err.message
+
     err = (err as BaseError).cause
   }
 
