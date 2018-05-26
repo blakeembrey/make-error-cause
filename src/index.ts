@@ -1,4 +1,5 @@
 import * as makeError from 'make-error'
+import { inspect } from 'util'
 
 /**
  * @internal
@@ -11,7 +12,7 @@ export class BaseError extends makeError.BaseError {
     super(message)
   }
 
-  inspect () {
+  [inspect.custom || 'inspect'] () {
     return fullStack(this)
   }
 
