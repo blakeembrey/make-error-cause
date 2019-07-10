@@ -8,7 +8,7 @@ export const SEPARATOR_TEXT = `\n\nThe following exception was the direct cause 
 
 export class BaseError extends makeError.BaseError {
 
-  constructor (message: string, public cause?: Error) {
+  constructor (message?: string, public cause?: Error) {
     super(message)
   }
 
