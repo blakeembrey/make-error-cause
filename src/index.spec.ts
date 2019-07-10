@@ -1,34 +1,35 @@
-import test = require('blue-tape')
-import { inspect } from 'util'
-import { BaseError, fullStack, SEPARATOR_TEXT } from './index'
+import { inspect } from "util";
+import { BaseError, fullStack, SEPARATOR_TEXT } from "./index";
 
-test('make error cause', t => {
+describe("make error cause", () => {
   class TestError extends BaseError {}
   class SubTestError extends TestError {}
 
-  t.test('render the cause', t => {
-    const cause = new Error('boom!')
-    const testError = new TestError('test boom!', cause)
-    const subTestError = new SubTestError('sub test boom!', testError)
+  it("should render the cause", () => {
+    const cause = new Error("boom!");
+    const testError = new TestError("test boom!", cause);
+    const subTestError = new SubTestError("sub test boom!", testError);
 
-    t.equal(fullStack(cause), cause.stack)
-    t.ok(cause instanceof Error)
+    expect(fullStack(cause)).toEqual(cause.stack);
+    expect(cause).toBeInstanceOf(Error);
 
-    t.equal(testError.cause, cause)
-    t.equal(fullStack(testError), `${testError.stack}${SEPARATOR_TEXT}${cause.stack}`)
-    t.equal(inspect(testError), fullStack(testError))
-    t.ok(testError instanceof Error)
-    t.ok(testError instanceof BaseError)
-    t.ok(testError instanceof TestError)
+    expect(testError.cause).toEqual(cause);
+    expect(fullStack(testError)).toEqual(
+      `${testError.stack}${SEPARATOR_TEXT}${cause.stack}`
+    );
+    expect(inspect(testError)).toEqual(fullStack(testError));
+    expect(testError).toBeInstanceOf(Error);
+    expect(testError).toBeInstanceOf(BaseError);
+    expect(testError).toBeInstanceOf(TestError);
 
-    t.equal(subTestError.cause, testError)
-    t.equal(fullStack(subTestError), `${subTestError.stack}${SEPARATOR_TEXT}${testError.stack}${SEPARATOR_TEXT}${cause.stack}`)
-    t.equal(inspect(subTestError), fullStack(subTestError))
-    t.ok(subTestError instanceof Error)
-    t.ok(subTestError instanceof BaseError)
-    t.ok(subTestError instanceof TestError)
-    t.ok(subTestError instanceof SubTestError)
-
-    t.end()
-  })
-})
+    expect(subTestError.cause).toEqual(testError);
+    expect(fullStack(subTestError)).toEqual(
+      `${subTestError.stack}${SEPARATOR_TEXT}${testError.stack}${SEPARATOR_TEXT}${cause.stack}`
+    );
+    expect(inspect(subTestError)).toEqual(fullStack(subTestError));
+    expect(subTestError).toBeInstanceOf(Error);
+    expect(subTestError).toBeInstanceOf(BaseError);
+    expect(subTestError).toBeInstanceOf(TestError);
+    expect(subTestError).toBeInstanceOf(SubTestError);
+  });
+});

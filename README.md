@@ -9,11 +9,11 @@
 
 ## Features
 
-* Compatible with node.js and browsers
-* Works with `instanceof`
-* Output full stack trace with `fullStack(err)`
-* Automatic full stack traces with node.js (via [`inspect()`](https://nodejs.org/api/util.html#util_util_inspect_object_options))
-* Extends [`make-error`](https://github.com/JsCommunity/make-error)
+- Compatible with node.js and browsers
+- Works with `instanceof`
+- Automatic full stack traces in node.js (supports [`inspect()`](https://nodejs.org/api/util.html#util_util_inspect_object_options))
+- Output full stack trace with `fullStack(err)`
+- Extends [`make-error`](https://github.com/JsCommunity/make-error)
 
 ## Installation
 
@@ -24,21 +24,21 @@ npm install make-error-cause --save
 ## Usage
 
 ```js
-import { BaseError, fullStack } from 'make-error-cause'
+import { BaseError, fullStack } from "make-error-cause";
 
 class CustomError extends BaseError {
-  constructor (message, cause) {
-    super(message, cause)
+  constructor(message, cause) {
+    super(message, cause);
   }
 }
 
-const error = new Error('Boom!')
-const customError = new CustomError('Another boom!', error)
+const error = new Error("Boom!");
+const customError = new CustomError("Another boom!", error);
 
-console.log(fullStack(error)) // Works with any error.
-console.log(fullStack(customError)) // Extended stack trace contains error causes.
+console.log(customError); // Automatically prints full stack trace using `fullStack(this)`.
+console.log(customError.cause); // Check causes via the `.cause` property.
 
-console.log(customError instanceof Error) //=> true
+console.log(customError instanceof Error); //=> true
 ```
 
 ## Attribution
@@ -47,8 +47,8 @@ Inspired by [`verror`](https://www.npmjs.com/package/verror), and others, but cr
 
 Other references:
 
-* [Java](https://docs.oracle.com/javase/7/docs/api/java/lang/Exception.html)
-* [Python](https://www.python.org/dev/peps/pep-3134/)
+- [Java](https://docs.oracle.com/javase/7/docs/api/java/lang/Exception.html)
+- [Python](https://www.python.org/dev/peps/pep-3134/)
 
 ## License
 

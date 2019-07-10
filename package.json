@@ -8,12 +8,13 @@
     "dist/"
   ],
   "scripts": {
+    "prettier": "prettier --write",
     "lint": "tslint \"src/**/*.ts\" --project tsconfig.json",
-    "build": "rm -rf dist/ && tsc",
-    "test-spec": "ts-node --type-check node_modules/blue-tape/bin/blue-tape.js \"src/**/*.spec.ts\" | tap-spec",
-    "test-cov": "ts-node node_modules/istanbul/lib/cli.js cover -e .ts --print none -x \"*.d.ts\" -x \"*.spec.ts\" blue-tape -- \"src/**/*.spec.ts\" | tap-spec",
-    "test": "npm run lint && npm run test-cov",
-    "prepublish": "npm run build"
+    "format": "npm run prettier -- README.md .travis.yml \"src/**/*.{jsx?,tsx?}\"",
+    "build": "rimraf dist && tsc",
+    "specs": "jest --coverage",
+    "test": "npm run -s lint && npm run -s build && npm run -s specs",
+    "prepare": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -37,18 +38,53 @@
     "url": "https://github.com/blakeembrey/make-error-cause/issues"
   },
   "homepage": "https://github.com/blakeembrey/make-error-cause",
+  "jest": {
+    "roots": [
+      "<rootDir>/src/"
+    ],
+    "transform": {
+      "\\.tsx?$": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(tsx?|jsx?)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,json,css,md}": [
+      "npm run prettier",
+      "git add"
+    ]
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "devDependencies": {
-    "@types/blue-tape": "^0.1.31",
-    "@types/node": "^9.6.1",
-    "blue-tape": "^1.0.0",
-    "istanbul": "1.0.0-alpha.2",
-    "tap-spec": "^4.1.1",
-    "ts-node": "^5.0.1",
+    "@types/jest": "^24.0.15",
+    "@types/node": "^12.6.2",
+    "husky": "^3.0.0",
+    "jest": "^24.8.0",
+    "lint-staged": "^9.1.0",
+    "prettier": "^1.18.2",
+    "rimraf": "^2.6.3",
+    "ts-jest": "^24.0.2",
+    "ts-node": "^8.3.0",
     "tslint": "^5.9.1",
-    "tslint-config-standard": "^7.0.0",
-    "typescript": "^2.7.2"
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-config-standard": "^8.0.1",
+    "typescript": "^3.5.3"
   },
   "dependencies": {
-    "make-error": "^1.3.4"
+    "make-error": "^1.3.5"
   }
 }
