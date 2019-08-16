@@ -6,6 +6,8 @@ import { inspect } from "util";
  */
 export const SEPARATOR_TEXT = `\n\nThe following exception was the direct cause of the above exception:\n\n`;
 
+const customInspect: symbol | string = inspect.custom || "inspect";
+
 /**
  * Create a new error instance of `cause` property support.
  */
@@ -14,7 +16,7 @@ export class BaseError extends makeError.BaseError {
     super(message);
   }
 
-  [inspect.custom || "inspect"]() {
+  [customInspect]() {
     return fullStack(this);
   }
 }
@@ -22,16 +24,50 @@ export class BaseError extends makeError.BaseError {
 /**
  * Capture the full stack trace of any error instance.
  */
-export function fullStack(error: Error | BaseError) {
-  let err: Error | undefined = (error as BaseError).cause;
-  let fullStack = error.stack || error.message || "";
+export function fullStack(error: Error | BaseError): string {
+  const causeChain = getCauseChain(error);
+  const inspections = causeChain.map(e => inspectSingleCauseLink(e));
+  return inspections.join(SEPARATOR_TEXT);
+}
 
-  while (err) {
-    fullStack += SEPARATOR_TEXT;
-    fullStack += err.stack || err.message || "";
+/**
+ * Get an array of errors, with the first array entry being the given
+ * error itself, and all the causes following afterwards.
+ *
+ * @param error The error whose cause chain is to be extracted.
+ * @return An array containing the cause chain.
+ */
+function getCauseChain(error: Error | BaseError): Array<Error | BaseError> {
+  const links: Array<Error | BaseError> = [];
+  let currentError = error;
 
-    err = (err as BaseError).cause;
+  while (true) {
+    links.push(currentError);
+
+    if (currentError instanceof BaseError && currentError.cause !== undefined) {
+      currentError = currentError.cause;
+    } else {
+      break;
+    }
   }
 
-  return fullStack;
+  return links;
+}
+
+function inspectSingleCauseLink(error: Error | BaseError): string {
+  let properties = Object.getOwnPropertyDescriptors(error);
+
+  delete properties["cause"];
+  Reflect.set(properties, customInspect, {
+    writable: false,
+    configurable: false,
+    enumerable: false,
+    value: undefined
+  } as PropertyDescriptor);
+
+  // create a shallow copy, omitting "cause" and the custom inspect method
+  // so we only get this one error without its cause nicely formatted
+  // and with support for custom inspections for any data on the error
+  // (turning off customInspect is not necessary this way)
+  return inspect(Object.create(Object.getPrototypeOf(error), properties));
 }

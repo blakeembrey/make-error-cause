@@ -11,8 +11,9 @@
     "prettier": "prettier --write",
     "lint": "tslint \"src/**/*.ts\" --project tsconfig.json",
     "format": "npm run prettier -- README.md .travis.yml \"src/**/*.{jsx?,tsx?}\"",
-    "build": "rimraf dist && tsc",
-    "specs": "jest --coverage",
+    "clean": "rimraf dist .nyc_output mochawesome-report coverage",
+    "build": "npm run clean && tsc",
+    "specs": "nyc mocha",
     "test": "npm run -s lint && npm run -s build && npm run -s specs",
     "prepare": "npm run build"
   },
@@ -38,23 +39,6 @@
     "url": "https://github.com/blakeembrey/make-error-cause/issues"
   },
   "homepage": "https://github.com/blakeembrey/make-error-cause",
-  "jest": {
-    "roots": [
-      "<rootDir>/src/"
-    ],
-    "transform": {
-      "\\.tsx?$": "ts-jest"
-    },
-    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(tsx?|jsx?)$",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "jsx",
-      "json",
-      "node"
-    ]
-  },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
@@ -70,16 +54,22 @@
     "access": "public"
   },
   "devDependencies": {
-    "@types/jest": "^24.0.15",
-    "@types/node": "^12.6.2",
-    "husky": "^3.0.0",
-    "jest": "^24.8.0",
-    "lint-staged": "^9.1.0",
+    "@types/chai": "^4.2.0",
+    "@types/jest": "^24.0.17",
+    "@types/mocha": "^5.2.7",
+    "@types/node": "^12.7.2",
+    "chai": "^4.2.0",
+    "husky": "^3.0.3",
+    "jest": "^24.9.0",
+    "lint-staged": "^9.2.1",
+    "mocha": "^6.2.0",
+    "mochawesome": "^4.1.0",
+    "nyc": "^14.1.1",
     "prettier": "^1.18.2",
-    "rimraf": "^2.6.3",
+    "rimraf": "^3.0.0",
     "ts-jest": "^24.0.2",
     "ts-node": "^8.3.0",
-    "tslint": "^5.9.1",
+    "tslint": "^5.18.0",
     "tslint-config-prettier": "^1.18.0",
     "tslint-config-standard": "^8.0.1",
     "typescript": "^3.5.3"
