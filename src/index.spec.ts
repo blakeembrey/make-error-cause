@@ -49,12 +49,13 @@ describe("make error cause", () => {
     const cause = new TestDataError("data1", "boom!");
     const testError = new TestDataError("data2", "test boom!", cause);
 
-    let formattedCause = `${cause.stack} {\n  someData: 'data1'\n}`;
-    let formattedError = `${testError.stack} {\n  someData: 'data2'\n}`;
-
-    expect(inspect(cause)).to.equal(formattedCause);
-    expect(inspect(testError)).to.equal(
-      formattedError + SEPARATOR_TEXT + formattedCause
-    );
+    expect(inspect(cause))
+      .to.contain(cause.stack)
+      .and.to.contain("someData: 'data1'");
+    expect(inspect(testError))
+      .to.contain(cause.stack)
+      .and.to.contain("someData: 'data1'")
+      .and.to.contain(testError.stack)
+      .and.to.contain("someData: 'data2'");
   });
 });
