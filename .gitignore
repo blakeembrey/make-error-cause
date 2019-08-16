@@ -1,6 +1,7 @@
-/node_modules/
-/coverage/
 .DS_Store
 npm-debug.log
-/dist/
-/typings/
+node_modules/
+coverage/
+dist/
+mochawesome-report/
+.nyc_output/

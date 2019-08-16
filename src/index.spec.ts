@@ -1,35 +1,61 @@
 import { inspect } from "util";
 import { BaseError, fullStack, SEPARATOR_TEXT } from "./index";
+import { expect } from "chai";
 
 describe("make error cause", () => {
-  class TestError extends BaseError {}
-  class SubTestError extends TestError {}
-
   it("should render the cause", () => {
+    class TestError extends BaseError {}
+
+    class SubTestError extends TestError {}
+
     const cause = new Error("boom!");
     const testError = new TestError("test boom!", cause);
     const subTestError = new SubTestError("sub test boom!", testError);
 
-    expect(fullStack(cause)).toEqual(cause.stack);
-    expect(cause).toBeInstanceOf(Error);
+    expect(fullStack(cause)).to.equal(cause.stack);
+    expect(cause).to.be.instanceOf(Error);
 
-    expect(testError.cause).toEqual(cause);
-    expect(fullStack(testError)).toEqual(
+    expect(testError.cause).to.equal(cause);
+    expect(fullStack(testError)).to.equal(
       `${testError.stack}${SEPARATOR_TEXT}${cause.stack}`
     );
-    expect(inspect(testError)).toEqual(fullStack(testError));
-    expect(testError).toBeInstanceOf(Error);
-    expect(testError).toBeInstanceOf(BaseError);
-    expect(testError).toBeInstanceOf(TestError);
+    expect(inspect(testError)).to.equal(fullStack(testError));
+    expect(testError).to.be.instanceOf(Error);
+    expect(testError).to.be.instanceOf(BaseError);
+    expect(testError).to.be.instanceOf(TestError);
 
-    expect(subTestError.cause).toEqual(testError);
-    expect(fullStack(subTestError)).toEqual(
+    expect(subTestError.cause).to.equal(testError);
+    expect(fullStack(subTestError)).to.equal(
       `${subTestError.stack}${SEPARATOR_TEXT}${testError.stack}${SEPARATOR_TEXT}${cause.stack}`
     );
-    expect(inspect(subTestError)).toEqual(fullStack(subTestError));
-    expect(subTestError).toBeInstanceOf(Error);
-    expect(subTestError).toBeInstanceOf(BaseError);
-    expect(subTestError).toBeInstanceOf(TestError);
-    expect(subTestError).toBeInstanceOf(SubTestError);
+    expect(inspect(subTestError)).to.equal(fullStack(subTestError));
+    expect(subTestError).to.be.instanceOf(Error);
+    expect(subTestError).to.be.instanceOf(BaseError);
+    expect(subTestError).to.be.instanceOf(TestError);
+    expect(subTestError).to.be.instanceOf(SubTestError);
+  });
+
+  it("should render extra properties in the full stack", function() {
+    class TestDataError extends BaseError {
+      public constructor(
+        public someData: string,
+        message?: string,
+        cause?: Error
+      ) {
+        super(message, cause);
+      }
+    }
+
+    const cause = new TestDataError("data1", "boom!");
+    const testError = new TestDataError("data2", "test boom!", cause);
+
+    expect(inspect(cause))
+      .to.contain(cause.stack)
+      .and.to.contain("someData: 'data1'");
+    expect(inspect(testError))
+      .to.contain(cause.stack)
+      .and.to.contain("someData: 'data1'")
+      .and.to.contain(testError.stack)
+      .and.to.contain("someData: 'data2'");
   });
 });
