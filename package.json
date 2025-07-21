@@ -60,7 +60,7 @@
     "@types/node": "^12.7.2",
     "chai": "^4.2.0",
     "husky": "^3.0.3",
-    "jest": "^24.9.0",
+    "jest": "^30.0.4",
     "lint-staged": "^9.2.1",
     "mocha": "^6.2.0",
     "mochawesome": "^4.1.0",
