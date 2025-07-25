@@ -1,5 +1,18 @@
 import * as makeError from "make-error";
-import { inspect } from "util";
+
+/**
+ * See https://nodejs.org/docs/latest/api/util.html#custom-inspection-functions-on-objects
+ */
+const customInspectSymbol = Symbol.for('nodejs.util.inspect.custom');
+
+/**
+ * See https://docs.deno.com/api/node/util/~/InspectOptions
+ */
+type InspectOptions = {
+  customInspect: boolean;
+}
+
+type InspectFunction = (value: any, options?: InspectOptions) => string;
 
 /**
  * @internal
@@ -20,15 +33,15 @@ export class BaseError extends makeError.BaseError {
     });
   }
 
-  [inspect.custom || /* istanbul ignore next */ "inspect"]() {
-    return fullStack(this);
+  [customInspectSymbol](depth: number, inspectOptions: InspectOptions, inspect: InspectFunction): string {
+    return fullStack(this, inspect);
   }
 }
 
 /**
  * Capture the full stack trace of any error instance.
  */
-export function fullStack(error: Error | BaseError) {
+export function fullStack(error: Error | BaseError, inspect: InspectFunction): string {
   const chain: Error[] = [];
   let cause: Error | undefined = error;
 
